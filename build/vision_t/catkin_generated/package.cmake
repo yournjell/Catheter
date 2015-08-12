@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "vision_t")
+set(vision_t_MAINTAINER "catheter <catheter@todo.todo>")
+set(vision_t_DEPRECATED "")
+set(vision_t_VERSION "0.0.0")
+set(vision_t_BUILD_DEPENDS "roscpp" "rospy" "std_msgs" "visualization_msgs" "cv_bridge" "image_transport" "opencv2" "image_geometry" "opencv" "OpenCV")
+set(vision_t_RUN_DEPENDS "roscpp" "rospy" "std_msgs" "visualization_msgs" "cv_bridge" "image_transport" "opencv2")
+set(vision_t_BUILDTOOL_DEPENDS "catkin" "catkin")

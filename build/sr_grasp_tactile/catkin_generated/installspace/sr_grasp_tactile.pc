@@ -1,0 +1,8 @@
+prefix=/home/catheter/catheter_position/install
+
+Name: sr_grasp_tactile
+Description: Description of sr_grasp_tactile
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/catheter/catheter_position/install/lib 
+Requires: roscpp sr_grasp_msgs std_msgs visualization_msgs

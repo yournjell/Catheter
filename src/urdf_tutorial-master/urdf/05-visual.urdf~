@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="visual">
+  <link name="left_gripper">
+    <visual>
+      <geometry>
+        <mesh filename="package://vision_t/heart_rviz_new.dae" scale=".1 .1 .1" />
+      </geometry>
+	
+	<origin rpy="0 0.015 0.01" xyz="0 0 -0.3"/>
+      <material name="my_color">
+         <color rgb="255 0 255" alpha="0.5"/>
+      </material>
+
+
+		<material name="red">
+         <color rgba="0 1 0 0.2"/>
+      </material>
+
+
+    </visual>
+  </link>
+
+</robot>

@@ -1,0 +1,18 @@
+<launch> 
+
+  <!-- used to specify if we have 2 aurora markers on the second segment tip (and we want to average them) 
+       or if we have a single marker for the second segment tip -->
+  <arg name="average_markers" default="false"/>
+
+  <group if="$(arg average_markers)">
+    <include file="$(find aurora)/launch/avg_markers_static_tf.xml"/>
+  </group>
+  
+  <group unless="$(arg average_markers)">
+    <include file="$(find aurora)/launch/markers_static_tf.xml"/>
+  </group>
+  
+  <node pkg="aurora" type="aurora" name="aurora" />
+  <node pkg="dynamic_reconfigure" type="reconfigure_gui" name="reconfigure_aurora" />
+
+</launch>

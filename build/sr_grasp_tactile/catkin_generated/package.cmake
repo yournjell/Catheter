@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "sr_grasp_tactile")
+set(sr_grasp_tactile_MAINTAINER "core <core@todo.todo>")
+set(sr_grasp_tactile_DEPRECATED "")
+set(sr_grasp_tactile_VERSION "0.0.0")
+set(sr_grasp_tactile_BUILD_DEPENDS "roscpp" "roslib" "sr_grasp_msgs" "std_msgs" "visualization_msgs" "geometry_msgs" "comedi")
+set(sr_grasp_tactile_RUN_DEPENDS "roscpp" "roslib" "sr_grasp_msgs" "std_msgs" "geometry_msgs" "visualization_msgs" "comedi")
+set(sr_grasp_tactile_BUILDTOOL_DEPENDS "catkin")

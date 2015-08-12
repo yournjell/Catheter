@@ -1,0 +1,5 @@
+<launch> 
+
+  <node pkg="aurora" type="aurora" name="aurora" />
+
+</launch>

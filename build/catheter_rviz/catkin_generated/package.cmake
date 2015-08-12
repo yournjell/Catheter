@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "catheter_rviz")
+set(catheter_rviz_MAINTAINER "catheter <catheter@todo.todo>")
+set(catheter_rviz_DEPRECATED "")
+set(catheter_rviz_VERSION "0.0.0")
+set(catheter_rviz_BUILD_DEPENDS "roscpp" "visualization_msgs")
+set(catheter_rviz_RUN_DEPENDS "roscpp" "visualization_msgs")
+set(catheter_rviz_BUILDTOOL_DEPENDS "catkin")

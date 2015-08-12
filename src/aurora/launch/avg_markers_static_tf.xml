@@ -1,0 +1,12 @@
+<launch> 
+    <node pkg="tf" type="static_transform_publisher" name="module_2_tip_tf_mk" args="0 0 0 0 0 0 1 /Marker1 /module_2_tip_marker 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="module_2_tip_tf" args="-0.011 0.00 -0.033 0 0 0 1 /module_2_tip_marker /module_2_tip 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="module_1_1_tip_tf_mk" args="0 0 0 1 0 0 0 /Marker2 /module_1_1_tip_marker 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="module_1_1_tip_tf" args="0 0 -0.013 0 0 0 1 /module_1_1_tip_marker /module_1_1_tip 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="module_1_2_tip_tf_mk" args="0 0 0 1 0 0 0 /Marker3 /module_1_2_tip_marker 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="module_1_2_tip_tf" args="0 0 -0.013 0 0 0 1 /module_1_2_tip_marker /module_1_2_tip 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="module_1_tip_module_2_base_tf" args="0 0 0.020 0 0 0 1 /module_1_tip /module_2_base 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="marker4_to_module_base_tf" args="0 0 0.050 0 0 0 1 /Marker4 /module_1_base 100"/>
+
+    <node pkg="aurora" type="base_tf" name="module_base_tf" />
+</launch>

@@ -1,0 +1,29 @@
+<launch>
+  <!-- upside down -->
+  <node pkg="tf" type="static_transform_publisher" name="upside_down_tf"
+	args="0 0 0.4 0 3.14159 0 /Marker1 /world 100"/>
+
+  <!-- module 1 base = marker 1 -->
+  <node pkg="tf" type="static_transform_publisher" name="module1_base_tf_mk"
+	args="0 0 0 0 0 0 /Marker1 /module_1_base_marker 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="module1_base_tf"
+	args="0 0 0.013 0 0 0 /module_1_base_marker /module_1_base 100"/>
+
+  <!-- module 1 tip = marker 2 -->
+  <node pkg="tf" type="static_transform_publisher" name="module_1_tip_tf_mk"
+	args="0 0 0 0 0 0 /Marker2 /module_1_tip_marker 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="module_1_tip_tf"
+	args="0 0 -0.017 0 0 0 /module_1_tip_marker /module_1_tip 100"/>
+
+  <!-- fixed transform from module 1 tip to 2 base -->
+  <node pkg="tf" type="static_transform_publisher" name="module_1_tip_module_2_base_tf"
+	args="0 0 0.013 0 0 0 /module_1_tip_marker /module_2_base 100"/>
+
+  <!-- module 2 tip = marker 3 -->
+  <node pkg="tf" type="static_transform_publisher" name="module_2_tip_tf_mk"
+	args="0 0 0 0 0 0 /Marker3 /module_2_tip_marker 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="module_2_tip_tf"
+	args="0 0 -0.014 0 0 0 /module_2_tip_marker /module_2_tip 100"/>
+
+  <node pkg="aurora" type="publish_tip_poses_node" name="publish_tip_poses_node" />
+</launch>

@@ -1,0 +1,8 @@
+prefix=/home/catheter/catheter_position/devel
+
+Name: urdf_tutorial
+Description: Description of urdf_tutorial
+Version: 0.2.4
+Cflags: 
+Libs: -L/home/catheter/catheter_position/devel/lib 
+Requires: 

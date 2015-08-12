@@ -1,0 +1,8 @@
+prefix=/home/catheter/catheter_position/devel
+
+Name: vision_t
+Description: Description of vision_t
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/catheter/catheter_position/devel/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/catheter/catheter_position/install
+
+Name: aurora
+Description: Description of aurora
+Version: 0.0.0
+Cflags: -I/home/catheter/catheter_position/install/include
+Libs: -L/home/catheter/catheter_position/install/lib -laurora
+Requires: dynamic_reconfigure roscpp rospy sensor_msgs tf

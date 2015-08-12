@@ -1,0 +1,6 @@
+<launch> 
+  
+  <node pkg="aurora" type="aurora" name="aurora" />
+  <node pkg="dynamic_reconfigure" type="reconfigure_gui" name="reconfigure_aurora" />
+
+</launch>

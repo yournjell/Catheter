@@ -1,0 +1,6 @@
+<launch> 
+
+  <node pkg="aurora" type="aurora" name="aurora" />
+  <node pkg="rqt_reconfigure" name="rqt_reconfigure" type="rqt_reconfigure" />
+
+</launch>

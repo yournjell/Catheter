@@ -1,0 +1,8 @@
+prefix=/home/catheter/catheter_position/install
+
+Name: tension_m
+Description: Description of tension_m
+Version: 0.0.0
+Cflags: -I/home/catheter/catheter_position/install/include
+Libs: -L/home/catheter/catheter_position/install/lib 
+Requires: message_runtime

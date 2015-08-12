@@ -1,0 +1,8 @@
+prefix=/home/catheter/catheter_position/install
+
+Name: catheter_rviz
+Description: Description of catheter_rviz
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/catheter/catheter_position/install/lib 
+Requires: 

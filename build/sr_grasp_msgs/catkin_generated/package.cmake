@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "sr_grasp_msgs")
+set(sr_grasp_msgs_MAINTAINER "Shadow Robot's software team <software@shadowrobot.com>")
+set(sr_grasp_msgs_DEPRECATED "")
+set(sr_grasp_msgs_VERSION "0.0.1")
+set(sr_grasp_msgs_BUILD_DEPENDS "message_generation" "actionlib_msgs" "sensor_msgs" "pcl_msgs" "moveit_msgs" "object_recognition_msgs" "std_msgs" "shape_msgs" "geometry_msgs")
+set(sr_grasp_msgs_RUN_DEPENDS "message_runtime" "actionlib_msgs" "sensor_msgs" "pcl_msgs" "moveit_msgs" "object_recognition_msgs" "std_msgs" "shape_msgs" "geometry_msgs")
+set(sr_grasp_msgs_BUILDTOOL_DEPENDS "catkin")

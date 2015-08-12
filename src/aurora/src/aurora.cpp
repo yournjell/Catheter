@@ -1,0 +1,566 @@
+/*
+ * aurora.cpp
+ *
+ *  Created on: May 5, 2014
+ *      Author: mende
+ *  modified on: May 23, 2014
+ *     by  Author: Angela Faragasso
+ */
+
+// stty -F /dev/ttyS0 9600 cs8 -cstopb -ixon -inpck -parenb crtscts clocal raw
+
+
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include "geometry_msgs/Pose.h"
+#include "geometry_msgs/PoseArray.h"
+#include "std_msgs/Float32.h"
+#include "aurora.h"
+#include <sstream>
+#include <dynamic_reconfigure/server.h>
+#include <aurora/aurora_paramsConfig.h>
+#include "string"
+#include <tf/tf.h>
+#include <errno.h>
+#include <termios.h>
+#include <unistd.h>
+#include <fcntl.h> // File control definitions
+#include <tf/transform_broadcaster.h>
+#include <signal.h>
+
+using namespace std;
+
+bool    Start_Aurora=false;
+int     Frequency=10;
+FILE    *serialr;
+FILE    *serialw;
+int     numSensors;
+string  ports[4];
+string  parameters[4];
+
+
+/*****************************************************************
+Official CRC16 code from NDI
+
+Name: CalcCRC16
+Input Values:
+int
+data :Data value to add to running CRC16.
+unsigned int
+*puCRC16    :Ptr. to running CRC16.
+Output Values:
+None.
+Returned Value:
+None.
+Description:
+This routine calculates a running CRC16 using the polynomial
+X^16 + X^15 + X^2 + 1.
+*****************************************************************/
+void CalcCRC16( int data, unsigned int *puCRC16 )
+{
+    static int oddparity[16] = { 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0 };
+    data = (data ^ (*puCRC16 & 0xff)) & 0xff;
+    *puCRC16 >>= 8;
+
+    if ( oddparity[data & 0x0f] ^ oddparity[data >> 4] )
+    {
+        *puCRC16 ^=0xc001;
+        /* if */
+    }
+    data <<= 6;
+    *puCRC16 ^= data;
+    data <<= 1;
+    *puCRC16 ^= data;
+} /* CalcCRC16 */
+
+
+/*****************************************************************
+Sends commands to Aurora and receives answer
+*****************************************************************/
+string rwSerial(string input)
+{
+    char readBuffer[256];
+    string  output;
+
+    //    ROS_INFO("Command = %s",input.data());
+
+    fputs (input.data(),serialw);
+    fflush(serialw);
+
+    fscanf (serialr, "%s", readBuffer);
+
+    output=readBuffer;
+
+    return output;
+}
+
+
+/*******************************************************************************
+Initialize Aurora System
+*******************************************************************************/
+bool initializeAurora()
+{
+    ROS_INFO("Trying to init Aurora..");
+
+    string command;
+    string retVal;
+
+    /*  Not necessary since we switched to Serial Break command in the main routine
+    command="reset \r";
+    retVal=rwSerial(command);
+    ROS_INFO("Reset = %s",retVal.data());
+    if (retVal.find("RESET")==-1)
+    {
+        ROS_ERROR("Aurora Reset FAILED! ");
+        return false;
+    }*/
+
+    // Send init Command
+    
+    command="init \r";
+    retVal=rwSerial(command);
+    retVal=rwSerial(command);
+    retVal=rwSerial(command);
+    ROS_INFO("Init = %s",retVal.data());
+
+    if (retVal.find("OK")==-1)
+    {
+        ROS_ERROR("Aurora Init FAILED! ");
+        return false;
+    }
+
+   
+
+
+ // Get connected sensors
+    command="phsr \r";
+    retVal=rwSerial(command);
+    retVal=rwSerial(command);
+
+    retVal=rwSerial(command);
+    ROS_INFO("PHSR = %s",retVal.data());
+
+    string Sensors=retVal.substr(1,1);
+
+    numSensors=atoi(Sensors.data());
+
+    if (numSensors<1)
+    {
+        ROS_ERROR("No Sensors found!");
+        return false;
+    }
+    ROS_INFO("Num Sensors = %d",numSensors);
+
+    // Store sensor information
+    for (int i=0 ; i<numSensors ; i++)
+    {
+        ports[i]=retVal.substr(2+(i*5),2);
+        parameters[i]=retVal.substr(4+(i*5),3);
+        ROS_INFO("Port address (%d) = %s",i,ports[i].data());
+        ROS_INFO("Port parameter (%d) = %s",i,parameters[i].data());
+    }
+
+    // Init and enable each sensor
+    for (int i=0 ; i<numSensors ; i++)
+    {
+        command="pinit "+ports[i]+"\r";
+        retVal=rwSerial(command);
+retVal=rwSerial(command);
+        ROS_INFO("PInit = %s",retVal.data());
+        if (retVal.find("OK")==-1)
+        {
+            ROS_ERROR("Aurora PInit FAILED for sensor %d",i);
+            return false;
+        }
+        command="PENA "+ports[i]+"D\r";
+        retVal=rwSerial(command);
+        ROS_INFO("PEna = %s",retVal.data());
+
+        if (retVal.find("OK")==-1)
+        {
+            ROS_ERROR("Aurora PEna FAILED for sensor %d",i);
+            return false;
+        }
+    }
+
+    // Increase baud rate - only 5 Hz possible with 9600 baud (standard)
+    command="comm 50000\r";
+    retVal=rwSerial(command);
+    ROS_INFO("Comm = %s",retVal.data());
+    if (retVal.find("OK")==-1)
+    {
+        ROS_ERROR("Adjustment of Baud Rate FAILED! ");
+        return false;
+    }
+
+    // Adjust system baud rate accordingly
+        string sysCall="stty -F /dev/ttyS0 115200 cs8 -cstopb -ixon -inpck -parenb crtscts clocal raw";
+    //string sysCall="stty -F /dev/ttyUSB0 115200 cs8 -cstopb -ixon -inpck -parenb crtscts clocal raw";
+    cout << sysCall << endl;
+    system (sysCall.data());
+    sleep (1);
+
+    return true;
+}
+
+
+/*******************************************************************************
+Start Tracking mode
+*******************************************************************************/
+bool startTrackingAurora()
+{
+    string command;
+    string retVal;
+
+    command="tstart \r";
+    retVal=rwSerial(command);
+    ROS_INFO("TStart = %s",retVal.data());
+    if (retVal.find("OK")==-1)
+    {
+        ROS_ERROR("Aurora Start FAILED! ");
+        return false;
+    }
+
+    sleep(1);
+    return true;
+}
+
+
+
+/*******************************************************************************
+Stop Aurora System and go to setup mode
+*******************************************************************************/
+bool stopTrackingAurora()
+{
+    string command;
+    string retVal;
+
+    command="tstop \r";
+    retVal=rwSerial(command);
+    ROS_INFO("TStop = %s",retVal.data());
+    if (retVal.find("OK")==-1)
+    {
+        ROS_ERROR("Aurora Stop FAILED! ");
+        return false;
+    }
+
+    return true;
+}
+
+
+/*******************************************************************************
+Read Sensor Data
+*******************************************************************************/
+geometry_msgs::PoseArray readData()
+{
+    char readBuffer[256];
+    string  retVal2, retVal3;
+    string command;
+    string retVal;
+    string handleString;
+    geometry_msgs::PoseArray auroraData;
+    geometry_msgs::Pose poseHandle;
+
+    // Request data set
+    command="tx \r";
+    retVal=rwSerial(command);
+    if (retVal.find("ERROR")!=-1)
+    {
+        ROS_ERROR("Aurora data acquisition FAILED! ");
+        auroraData.header.frame_id="ERROR";
+        return auroraData;
+    }
+
+    // Generate message
+    auroraData.header.frame_id="/aurora";
+    auroraData.header.stamp=ros::Time::now();
+
+    // Cross check number of sensors connected
+    string Sensors=retVal.substr(1,1);
+    int activeSensors=atoi(Sensors.data());
+    if (numSensors!=activeSensors)
+    {
+        ROS_ERROR("NUMBER OF SENSORS HAS CHANGED!!");
+        auroraData.header.frame_id="ERROR";
+        return auroraData;
+
+    }
+    // Get pose of first sensor
+    handleString=retVal.substr(4,67);
+
+    if (handleString.find("MISSING")!=-1)
+    {
+        ROS_ERROR("First reported sensor not found!");
+
+        poseHandle.orientation.w=0;
+        poseHandle.orientation.x=0;
+        poseHandle.orientation.y=0;
+        poseHandle.orientation.z=0;
+        poseHandle.position.x=0;
+        poseHandle.position.y=0;
+        poseHandle.position.z=0;
+    }
+    else
+    {
+        poseHandle.orientation.w=atof((handleString.substr(0,6)).data())/10000;
+        poseHandle.orientation.z=atof((handleString.substr(6,6)).data())/10000;
+        poseHandle.orientation.y=atof((handleString.substr(12,6)).data())/10000;
+        poseHandle.orientation.x=atof((handleString.substr(18,6)).data())/10000;
+        poseHandle.position.z=atof((handleString.substr(24,7)).data())/-1000+10;
+        poseHandle.position.y=atof((handleString.substr(31,7)).data())/1000;
+        poseHandle.position.x=atof((handleString.substr(38,7)).data())/1000+18;
+	
+    }
+
+    // Add sensor pose to message
+    auroraData.poses.push_back(poseHandle);
+
+    // Get pose of additional sensors
+    for (int i=0 ; i<numSensors-1 ; i++)
+    {
+        fscanf (serialr, "%s", readBuffer);
+        retVal2=readBuffer;
+
+        handleString=retVal2.substr(2,67);
+
+        if (handleString.find("MISSING")!=-1)
+        {
+            ROS_ERROR("Additional reported sensor not found!");
+
+            poseHandle.orientation.w=0;
+            poseHandle.orientation.x=0;
+            poseHandle.orientation.y=0;
+            poseHandle.orientation.z=0;
+            poseHandle.position.x=0;
+            poseHandle.position.y=0;
+            poseHandle.position.z=0;
+        }
+        else
+        {
+            poseHandle.orientation.w=atof((handleString.substr(0,6)).data())/10000;
+            poseHandle.orientation.z=atof((handleString.substr(6,6)).data())/10000;
+            poseHandle.orientation.y=atof((handleString.substr(12,6)).data())/10000;
+            poseHandle.orientation.x=atof((handleString.substr(18,6)).data())/10000;
+            poseHandle.position.z=atof((handleString.substr(24,7)).data())/-1000+10;
+            poseHandle.position.y=atof((handleString.substr(31,7)).data())/1000;
+            poseHandle.position.x=atof((handleString.substr(38,7)).data())/1000+18;
+        }
+
+        // Add sensor pose to message
+        auroraData.poses.push_back(poseHandle);
+    }
+
+    // Read additional information like precision and so on. Not used at the moment..
+    fscanf (serialr, "%s", readBuffer);
+    retVal3=readBuffer;
+
+    return auroraData;
+}
+
+
+
+/*******************************************************************************
+Callback function for dynamic_reconfigure
+*******************************************************************************/
+void configCallback(aurora::aurora_paramsConfig &config, uint32_t level)
+{
+    ROS_INFO("Reconfigure request : Start Aurora %i ", config.Start_Aurora);
+
+
+    if ((::Start_Aurora==false)&&(config.Start_Aurora==true))
+    {
+        ROS_INFO("Trying to start Tracking Mode");
+        startTrackingAurora();
+    }
+
+    if ((::Start_Aurora==true)&&(config.Start_Aurora==false))
+    {
+        ROS_INFO("Trying to stop Tracking Mode");
+        stopTrackingAurora();
+    }
+
+    ::Start_Aurora=config.Start_Aurora;
+    //    ::Frequency=config.Frequency;
+
+}
+
+
+/*******************************************************************************
+Configure tf for every sensor
+*******************************************************************************/
+tf::StampedTransform pose2strans(std_msgs::Header header,geometry_msgs::Pose pose,std::string d_frame)
+{
+    tf::Vector3 v;
+    v.setX(pose.position.x);
+    v.setY(pose.position.y);
+    v.setZ(pose.position.z);
+    tf::StampedTransform a(tf::Transform(tf::Quaternion(pose.orientation.x,pose.orientation.y,pose.orientation.z,pose.orientation.w),v),header.stamp,header.frame_id,d_frame);
+    return a;
+}
+
+void close_serial(int){
+    stopTrackingAurora();
+    fclose(serialw);
+    fclose(serialr);
+    exit(0);
+}
+
+int main(int argc, char **argv)
+{
+    /**
+    * The ros::init() function needs to see argc and argv so that it can perform
+    * any ROS arguments and name remapping that were provided at the command line. For programmatic
+    * remappings you can use a different version of init() which takes remappings
+    * directly, but for most command-line programs, passing argc and argv is the easiest
+    * way to do it.  The third argument to init() is the name of the node.
+    *
+    * You must call one of the versions of ros::init() before using any other
+    * part of the ROS system.
+    */
+
+    //Send serial break to reset Aurora communication settings
+    int fd;
+        fd=open("/dev/ttyS0",0);
+    //fd=open("/dev/ttyUSB0",0);
+    tcsendbreak(fd,0);
+    close (fd);
+    sleep (1);
+
+    // Ensure correct serial port settings
+       string sysCall="stty -F /dev/ttyS0 9600 cs8 -cstopb -ixon -inpck -parenb crtscts clocal raw";
+   // string sysCall="stty -F /dev/ttyUSB0 9600 cs8 -cstopb -ixon -inpck -parenb crtscts clocal raw";
+    cout << sysCall << endl;
+    system (sysCall.data());
+
+    // Initialize ROS node
+    ros::init(argc, argv, "aurora");
+
+    //Initialisation of serial device. Configuration of serial port has to be done in advance, nothing will be changed here.
+        serialw = fopen ( "/dev/ttyS0" , "w" );
+    //serialw = fopen ( "/dev/ttyUSB0" , "w" );
+
+    if (serialw==NULL)
+    {
+        ROS_ERROR("Could not open serial device");
+        return 0;
+    }
+
+        serialr = fopen ( "/dev/ttyS0" , "r" );
+  //  serialr = fopen ( "/dev/ttyUSB0" , "r" );
+    if (serialr==NULL)
+    {
+        ROS_ERROR("Could not open serial device");
+        return 0;
+    }
+
+    /**
+     * NodeHandle is the main access point to communications with the ROS system.
+     * The first NodeHandle constructed will fully initialize this node, and the last
+     * NodeHandle destructed will close down the node.
+     */
+    ros::NodeHandle n;
+
+
+    /**
+     * The advertise() function is how you tell ROS that you want to
+     * publish on a given topic name. This invokes a call to the ROS
+     * master node, which keeps a registry of who is publishing and who
+     * is subscribing. After this advertise() call is made, the master
+     * node will notify anyone who is trying to subscribe to this topic name,
+     * and they will in turn negotiate a peer-to-peer connection with this
+     * node.  advertise() returns a Publisher object which allows you to
+     * publish messages on that topic through a call to publish().  Once
+     * all copies of the returned Publisher object are destroyed, the topic
+     * will be automatically unadvertised.
+     *
+     * The second parameter to advertise() is the size of the message queue
+     * used for publishing messages.  If messages are published more quickly
+     * than we can send them, the number here specifies how many messages to
+     * buffer up before throwing some away.
+     */
+    ros::Publisher aurora_pub = n.advertise<geometry_msgs::PoseArray>("aurora", 1000);
+
+    // Generate output message
+    geometry_msgs::PoseArray auroraData;
+    tf::TransformBroadcaster br;
+    // This is the desired sensor frequency. Actual settings of serial port only work up to 40 Hz
+    ros::Rate loop_rate(40);
+
+    // Set up a dynamic reconfigure server.
+    // This should be done before reading parameter server values.
+    // The idea was to make frequency adjustable via dynamic reconfigure, but it seems that this is not possible..
+    dynamic_reconfigure::Server<aurora::aurora_paramsConfig> dr_srv;
+    dynamic_reconfigure::Server<aurora::aurora_paramsConfig>::CallbackType cb;
+    cb = boost::bind(::configCallback, /*Processor,*/ _1, _2);
+    dr_srv.setCallback(cb);
+
+
+    // Initialize node parameters from launch file or command line.
+    // Use a private node handle so that multiple instances of the node can
+    // be run simultaneously while using different parameters.
+    ros::NodeHandle private_node_handle_("~");
+
+    // Initialize Aurora system
+    bool initSuccessful=initializeAurora();
+
+    if (initSuccessful==false)
+        return 1;
+
+    // Enable tracking mode
+    if (::Start_Aurora==true)
+    {
+        initSuccessful=startTrackingAurora();
+    }
+
+    if (initSuccessful==false){
+        return 1;
+}
+    ROS_INFO("NDI Aurora driver ready to start Tracking");
+
+    void (*prev_handler)(int);
+
+    prev_handler = signal(SIGINT,close_serial);
+    // main loop
+
+    while (ros::ok())
+    {
+        if (::Start_Aurora==true)
+        {
+            // read pose data from system
+            auroraData=readData();
+
+            if (auroraData.header.frame_id=="ERROR")
+            {
+                ROS_INFO("Error reading Aurora data!!");
+                return 1;
+            }
+
+            stringstream fra;
+
+            // Transform the poseArray in tf
+            for(int i=0;i<auroraData.poses.size();i++)
+            {
+                fra.str("");
+                fra << "aurora_marker" << i+1;
+                br.sendTransform(pose2strans(auroraData.header,auroraData.poses.at(i),fra.str()));
+            }
+
+
+            aurora_pub.publish(auroraData);
+
+        }
+
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+
+    // close serial connection
+    fclose(serialw);
+    fclose(serialr);
+
+    return 0;
+}
+
+
+
+

@@ -1,0 +1,2 @@
+aurora:position_control_free:sr_grasp_msgs:sr_grasp_tactile:tension_m:urdf_tutorial-master:vision_t
+-DCATKIN_DEVEL_PREFIX=/home/catheter/catheter_position/devel -DCMAKE_INSTALL_PREFIX=/home/catheter/catheter_position/install -G Unix Makefiles

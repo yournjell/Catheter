@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "position_control_free")
+set(position_control_free_MAINTAINER "catheter <catheter@todo.todo>")
+set(position_control_free_DEPRECATED "")
+set(position_control_free_VERSION "0.0.0")
+set(position_control_free_BUILD_DEPENDS "roscpp" "rospy" "std_msgs" "visualization_msgs" "cv_bridge" "image_transport" "opencv2" "image_geometry" "opencv" "OpenCV")
+set(position_control_free_RUN_DEPENDS "roscpp" "rospy" "std_msgs" "visualization_msgs" "cv_bridge" "image_transport" "opencv2")
+set(position_control_free_BUILDTOOL_DEPENDS "catkin" "catkin")

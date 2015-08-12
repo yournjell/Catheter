@@ -1,0 +1,8 @@
+prefix=/home/catheter/catheter_position/devel
+
+Name: r2d2
+Description: Description of r2d2
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/catheter/catheter_position/devel/lib 
+Requires: 

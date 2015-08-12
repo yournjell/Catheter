@@ -1,0 +1,139 @@
+/*
+* File:   main.cpp
+* Author: sagar
+*
+* Created on 10 September, 2012, 7:48 PM
+*/
+ 
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
+
+using namespace cv;
+
+
+using namespace std;
+
+double alpha; /**< Simple contrast control */
+int beta; /**< Simple brightness control */
+int w = 300;
+
+void MyFilledCircle (Mat img, Point center)
+{
+
+int thickness = -1;
+int lineType = 8;
+
+circle(img, center, w/32.0, Scalar(0,0,225), thickness,lineType);
+
+
+}
+
+
+int main() {
+VideoCapture stream1(0);   //0 is the id of video device.0 if you have only one camera.
+  namedWindow("My Window", 1);
+
+vector<Mat> spl;
+
+Mat B, kern;
+stream1.read(B);
+
+kern = (Mat_<char>(3,3) << 0,-1,0,-1,10,-1,0,-1,0);
+Mat new_image = Mat::zeros( B.size(), B.type() );
+
+//Create trackbar to change brightness
+int iSliderValue1 = 50;
+createTrackbar("Brightness", "My Window", &iSliderValue1, 100);
+
+//Create trackbar to change contrast
+int iSliderValue2 = 50;
+createTrackbar("Contrast", "My Window", &iSliderValue2, 100);
+
+//Create trackbar to change contrast
+int iSliderValue3 = 1;
+createTrackbar("upper", "My Window", &iSliderValue3, 255);
+
+
+//Create trackbar to change contrast
+int iSliderValue4 = 1;
+createTrackbar("lower", "My Window", &iSliderValue4, 255);
+
+
+while (true) {
+
+
+Mat A , B;
+stream1.read(B);
+
+
+Mat dst;
+int iBrightness  = 60 - 50;
+int upper  = iSliderValue3;
+int lower  = iSliderValue4;
+double dContrast = 38 / 50.0;
+
+B.convertTo(A, -1, dContrast, iBrightness); 
+
+
+
+split(A,spl);
+
+Mat th1, C = spl[2];
+
+threshold(spl[2], th1, 162,255,CV_THRESH_BINARY);
+
+//threshold(spl[2], th1, lower,upper,CV_THRESH_BINARY);
+Canny(th1, th1, 100, 200, 3);
+
+imshow("th1", th1);
+imshow("ori", A);
+
+ int iKey = waitKey(50);
+
+//if user press 'ESC' key
+if (iKey == 27)
+{
+break;
+}
+
+
+
+}
+return 0;
+}
+
+//Mat red_c(B.rows, B.cols, CV_8UC3);
+
+//if (!stream1.isOpened()) { //check if video device has been initialised
+//cout << "cannot open camera";
+//}
+
+
+
+
+
+
+
+//Mat em = Mat::zeros( B.rows, B.cols, CV_8UC1 );
+
+
+
+//filter2D(A,new_image,A.depth(),kern);
+//MyFilledCircle(new_image, Point(300, 200));
+
+//pyrDown(A, C, Size(A.cols/2, A.rows/2) );
+
+
+
+//for( int y = 0; y < B.rows; y++ )
+//{ for( int x = 0; x < B.cols; x++ )
+//{ for( int c = 0; c < 3; c++ )
+//{
+//new_image.at<Vec3b>(y,x)[c] =
+//saturate_cast<uchar>( alpha*( A.at<Vec3b>(y,x)[c] ) + beta );
+//}
+//}
+//}
+//Mat new_image = Mat::zeros( B.size(), B.type() );
+

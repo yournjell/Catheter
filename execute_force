@@ -1,0 +1,5 @@
+rosservice call /finger1/sensor_bias     <------ initializtion
+catheter@catheter-DQ965GF:~/catheter_position/src/sr_grasp_tactile/launch$ roslaunch single.launch   <-- run launch
+
+single.yaml <- calibtration
+
