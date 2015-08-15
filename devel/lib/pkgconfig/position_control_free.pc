@@ -3,6 +3,6 @@ prefix=/home/catheter/catheter_position/devel
 Name: position_control_free
 Description: Description of position_control_free
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/catheter/catheter_position/devel/include
 Libs: -L/home/catheter/catheter_position/devel/lib 
 Requires: 

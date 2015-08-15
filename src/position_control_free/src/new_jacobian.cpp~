@@ -357,6 +357,7 @@ for(int h = 0; h <18 ;h++){
 
 ////////////////////////////////////////////
 
+  ros::Subscriber sub1 = n.subscribe("tension_a", 100, tension);
 
   ros::Subscriber sub1 = n.subscribe("tension11", 100, tension1);
   ros::Subscriber sub2 = n.subscribe("tension21", 100, tension2);
@@ -608,7 +609,7 @@ else { mm_pzp = mm_pz;
 				dteny1 = (0.02*(target_y-mm_pyp))+tension_v1;
 				dteny2 = 0.00;
 				
-				if((dteny1 <0.00)&&(tension_v1==0.00)){ dteny1 = 0.00; dteny2 = abs(mm_py)*0.02; }
+				if((dteny1 <0.00)&&(tension_v1<0.1)){ dteny1 = 0.00; dteny2 = abs(mm_py)*0.02; }
 				else if(dteny1 < 0.00){dteny1 = 0.06; dteny2 = 0.00;}
 
 
@@ -620,7 +621,7 @@ else { mm_pzp = mm_pz;
 				dteny2 = (0.02*(-target_y-mm_pyn))+tension_v2;
 				dteny1 = 0.00;
 
-				if((dteny2 <0.00)&&(tension_v2==0.00)){ dteny2 = 0.00; dteny1 = abs(mm_py)*0.02; }
+				if((dteny2 <0.00)&&(tension_v2<0.1)){ dteny2 = 0.00; dteny1 = abs(mm_py)*0.02; }
 				else if(dteny2 < 0.00){dteny2 = 0.06; dteny1 = 0.00;}
 
 
@@ -644,7 +645,7 @@ else { mm_pzp = mm_pz;
 				dtenz1 = (0.02*(target_z-mm_pzp))+tension_v3;
 				dtenz2 = 0.00;
 
-				if((dtenz1 <0.00)&&(tension_v3==0.00)){ dtenz1 = 0.00; dtenz2 = abs(mm_pz)*0.02; }
+				if((dtenz1 <0.00)&&(tension_v3<0.1)){ dtenz1 = 0.00; dtenz2 = abs(mm_pz)*0.02; }
 				else if(dtenz1 < 0.00){dtenz1 = 0.06; dtenz2 = 0.00;}
 
 
@@ -658,7 +659,7 @@ else { mm_pzp = mm_pz;
 				dtenz2 = (0.02*(-target_z-mm_pzn))+tension_v4;
 				dtenz1 = 0.00;
 
-				if((dtenz2 <0.00)&&(tension_v4==0.00)){ dtenz2 = 0.00; dtenz1 = abs(mm_pz)*0.02; }
+				if((dtenz2 <0.00)&&(tension_v4<0.1)){ dtenz2 = 0.00; dtenz1 = abs(mm_pz)*0.02; }
 				else if(dtenz2 < 0.00){dtenz2 = 0.06; dtenz1 = 0.00;}
 
 				}

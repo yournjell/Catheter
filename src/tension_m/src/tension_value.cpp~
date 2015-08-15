@@ -343,10 +343,11 @@ msg2.tension1 = tension1;
 msg2.tension2 = tension2;
 msg2.tension3 = tension3;
 msg2.tension4 = tension4;
+msg2.header.stamp=ros::Time::now();
 
 
 tension_pub.publish(msg2);
-
+ 
 usleep(2);
 
 

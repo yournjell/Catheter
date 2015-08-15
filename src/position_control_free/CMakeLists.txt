@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_geometry
   image_transport
 visualization_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -50,12 +51,10 @@ visualization_msgs
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
-
+add_message_files(
+   FILES
+   force_control.msg
+ )
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
@@ -71,10 +70,10 @@ visualization_msgs
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
 
 ###################################
 ## catkin specific configuration ##
@@ -113,12 +112,13 @@ ${OpenCV_INCLUDE_DIRS}
  add_executable(control src/control.cpp)
  add_executable(new_jacobian src/new_jacobian.cpp)
  add_executable(initial src/initial.cpp)
-
+ add_executable(force_control src/force_control.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
  add_dependencies(control control_cpp)
 add_dependencies(initial initial_cpp)
 add_dependencies(new_jacobian new_jacobian_cpp)
+add_dependencies(force_control force_control_cpp)
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(control
@@ -129,6 +129,10 @@ target_link_libraries(initial
  ${OpenCV_LIBS}  ${catkin_LIBRARIES}
  )
 target_link_libraries(new_jacobian
+ ${OpenCV_LIBS}  ${catkin_LIBRARIES}
+ )
+
+target_link_libraries(force_control
  ${OpenCV_LIBS}  ${catkin_LIBRARIES}
  )
 

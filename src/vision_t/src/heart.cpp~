@@ -106,10 +106,10 @@ int main(int argc, char** argv) {
 	// LINE_STRIP/LINE_LIST markers use only the x component of scale, for the line width
 	
 	// Points are green
-	point.color.r = 0.5f;
-	point.color.g = 0.1f;
-	//point.color.b = 0.0;
-	point.color.a = .3;
+	//point.color.r = 0.5f;
+	point.color.g = 0.5f;
+	point.color.b = 0.5f;
+	point.color.a = 1;
 
 
 
@@ -142,7 +142,7 @@ int i;
   cin >> i;
   
 float y_com = 0.4;
-float z_com = 0.4;
+float z_com = 0.2;
 switch (i)
 {
 

@@ -230,12 +230,12 @@ int pdir = distance_dir;
 
 //char* p_arr[1] = reinterpret_cast<char*>(arr[0]);
 
-char buf1[16]={p,p2,p3,pa,p2a,p3a,pb,p2b,p3b,pc,p2c,p3c,pd,p2d,p3d,pdir};
+char buf1[18]={8,p,p2,p3,pa,p2a,p3a,pb,p2b,p3b,pc,p2c,p3c,pd,p2d,p3d,pdir,6};
 
 
 //printf("%d , %d, %d,%d , %d, %d,%d , %d, %d,%d , %d, %d,%d , %d, %d", buf1[0], buf1[1], buf1[2], buf1[3], buf1[4], buf1[5], buf1[6], buf1[7], buf1[8], buf1[9], buf1[10], buf1[11], buf1[12], buf1[13], buf1[14]);       
     
-  write(hj,buf1,16);
+  write(hj,buf1,18);
 
 
 

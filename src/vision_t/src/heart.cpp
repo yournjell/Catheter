@@ -107,9 +107,9 @@ int main(int argc, char** argv) {
 	
 	// Points are green
 	point.color.r = 0.5f;
-	point.color.g = 0.1f;
-	//point.color.b = 0.0;
-	point.color.a = .3;
+	point.color.g = 0.5f;
+	//point.color.b = 0.5f;
+	point.color.a = 1;
 
 
 
