@@ -4,7 +4,7 @@ finger1:
   sensor:
     rate: 100
     device: /dev/comedi0
-    calibration: /calibration/FT12624.cal
+    calibration: /calibration/FT10786.cal
   contact:
     a: 8.5
     b: 16.0

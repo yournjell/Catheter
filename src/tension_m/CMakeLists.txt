@@ -104,6 +104,7 @@ include_directories(
 # )
 
 ## Declare a cpp executable
+ add_executable(translation src/translation.cpp)
  add_executable(tension_c src/tension_value.cpp)
  add_executable(tension_c_w src/tension_value_write.cpp)
  add_executable(aura src/aura_serial.cpp)
@@ -113,6 +114,9 @@ include_directories(
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(tension_c
+   ${catkin_LIBRARIES}
+ ) 
+target_link_libraries(translation
    ${catkin_LIBRARIES}
  )
  target_link_libraries(tension_c_w

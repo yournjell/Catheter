@@ -382,6 +382,7 @@ SET(CMAKE_DEPEND_INFO_FILES
   "tension_m/CMakeFiles/tension_m_generate_messages_py.dir/DependInfo.cmake"
   "tension_m/CMakeFiles/tension_m_genlisp.dir/DependInfo.cmake"
   "tension_m/CMakeFiles/tension_m_genpy.dir/DependInfo.cmake"
+  "tension_m/CMakeFiles/translation.dir/DependInfo.cmake"
   "aurora/CMakeFiles/actionlib_generate_messages_cpp.dir/DependInfo.cmake"
   "aurora/CMakeFiles/actionlib_generate_messages_lisp.dir/DependInfo.cmake"
   "aurora/CMakeFiles/actionlib_generate_messages_py.dir/DependInfo.cmake"

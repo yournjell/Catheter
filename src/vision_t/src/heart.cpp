@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
 	point.pose.orientation.w = 1;//1;
    	point.pose.orientation.x = 0.00;//1.004; //blue
    	point.pose.orientation.y = 0.015;//0.01; //gree
-   	point.pose.orientation.z = -0.01;//0;
+   	point.pose.orientation.z = -0.02;//0;
 	
 	point.scale.x =.1;
 	point.scale.y =.1;
@@ -150,8 +150,8 @@ switch (i)
 case 1:
 	point.mesh_resource = "package://vision_t/change_orig_heart2.STL";
 
-	point.pose.position.x = -27.9+13+5; //10; //-7;//-10;
-	point.pose.position.y = -8.3+y_com;//-25; //-21.6;//20;
+	point.pose.position.x = -27.9+13+4.5; //10; //-7;//-10;
+	point.pose.position.y = -8.3+y_com-0.2;//-25; //-21.6;//20;
 	point.pose.position.z = -9.8+10+z_com; // 0;//-9.8;
 
 
@@ -160,8 +160,8 @@ break;
 case 2:
         point.mesh_resource = "package://vision_t/top.STL";
 
-	point.pose.position.x = -27.9+13+5; //10; //-7;//-10;
-	point.pose.position.y = -8.3+y_com;//-25; //-21.6;//20;
+	point.pose.position.x = -27.9+13+4.5; //10; //-7;//-10;
+	point.pose.position.y = -8.3+y_com-0.2;//-25; //-21.6;//20;
 	point.pose.position.z = -9.8+10+z_com; // 0;//-9.8;
 
 
@@ -170,8 +170,8 @@ break;
 case 3:
         point.mesh_resource = "package://vision_t/venticle.STL";
 
-	point.pose.position.x = -27.9+13+5.145; //10; //-7;//-10;
-	point.pose.position.y = -8.3+5.57+y_com;//-25; //-21.6;//20;
+	point.pose.position.x = -27.9+13+5.145-0.4; //10; //-7;//-10;
+	point.pose.position.y = -8.3+5.57+y_com-0.2;//-25; //-21.6;//20;
 	point.pose.position.z = -9.8+10+.8+z_com; // 0;//-9.8;
 
 
@@ -181,8 +181,8 @@ break;
 case 4:
         point.mesh_resource = "package://vision_t/left_atrium.STL";
 
-	point.pose.position.x = -27.9+13+5.305; //10; //-7;//-10;
-point.pose.position.y = -8.305+y_com;//-25; //-21.6;//20;
+	point.pose.position.x = -27.9+13+5.305-0.5; //10; //-7;//-10;
+        point.pose.position.y = -8.305+y_com-0.2;//-25; //-21.6;//20;
 	point.pose.position.z = -9.8+9.993+z_com; // 0;//-9.8;
 break;
 
@@ -555,7 +555,72 @@ points.pose.position.z = p.z;
 
 
 
+marker_pub.publish(points);	
+
+points.id = 20;
+
+
+      p.x= 6.598;
+      p.y= 3.927;
+      p.z= 10.628;
+
+
+
+
+ 	points.points.push_back(p);
+	line_strip.points.push_back(p);
+
+points.pose.position.x = p.x;
+points.pose.position.y = p.y;
+points.pose.position.z = p.z;
+
+
+
 marker_pub.publish(points);
+
+points.id = 21;
+
+
+      p.x= 6.633;
+      p.y= 3.035;
+      p.z= 9.039;
+
+
+
+
+ 	points.points.push_back(p);
+	line_strip.points.push_back(p);
+
+points.pose.position.x = p.x;
+points.pose.position.y = p.y;
+points.pose.position.z = p.z;
+
+
+
+marker_pub.publish(points);
+    
+points.id = 22;
+
+
+      p.x= 5.257;
+      p.y= 3.3729;
+      p.z= 9.599;
+
+
+
+
+ 	points.points.push_back(p);
+	line_strip.points.push_back(p);
+
+points.pose.position.x = p.x;
+points.pose.position.y = p.y;
+points.pose.position.z = p.z;
+
+
+
+marker_pub.publish(points);
+    
+
 }
 
 

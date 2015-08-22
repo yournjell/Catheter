@@ -303,6 +303,20 @@ tension_m_genpy/fast:
 	cd /home/catheter/catheter_position/build && $(MAKE) -f tension_m/CMakeFiles/tension_m_genpy.dir/build.make tension_m/CMakeFiles/tension_m_genpy.dir/build
 .PHONY : tension_m_genpy/fast
 
+# Convenience name for target.
+tension_m/CMakeFiles/translation.dir/rule:
+	cd /home/catheter/catheter_position/build && $(MAKE) -f CMakeFiles/Makefile2 tension_m/CMakeFiles/translation.dir/rule
+.PHONY : tension_m/CMakeFiles/translation.dir/rule
+
+# Convenience name for target.
+translation: tension_m/CMakeFiles/translation.dir/rule
+.PHONY : translation
+
+# fast build rule for target.
+translation/fast:
+	cd /home/catheter/catheter_position/build && $(MAKE) -f tension_m/CMakeFiles/translation.dir/build.make tension_m/CMakeFiles/translation.dir/build
+.PHONY : translation/fast
+
 src/aura_serial.o: src/aura_serial.cpp.o
 .PHONY : src/aura_serial.o
 
@@ -375,6 +389,30 @@ src/tension_value_write.cpp.s:
 	cd /home/catheter/catheter_position/build && $(MAKE) -f tension_m/CMakeFiles/tension_c_w.dir/build.make tension_m/CMakeFiles/tension_c_w.dir/src/tension_value_write.cpp.s
 .PHONY : src/tension_value_write.cpp.s
 
+src/translation.o: src/translation.cpp.o
+.PHONY : src/translation.o
+
+# target to build an object file
+src/translation.cpp.o:
+	cd /home/catheter/catheter_position/build && $(MAKE) -f tension_m/CMakeFiles/translation.dir/build.make tension_m/CMakeFiles/translation.dir/src/translation.cpp.o
+.PHONY : src/translation.cpp.o
+
+src/translation.i: src/translation.cpp.i
+.PHONY : src/translation.i
+
+# target to preprocess a source file
+src/translation.cpp.i:
+	cd /home/catheter/catheter_position/build && $(MAKE) -f tension_m/CMakeFiles/translation.dir/build.make tension_m/CMakeFiles/translation.dir/src/translation.cpp.i
+.PHONY : src/translation.cpp.i
+
+src/translation.s: src/translation.cpp.s
+.PHONY : src/translation.s
+
+# target to generate assembly for a file
+src/translation.cpp.s:
+	cd /home/catheter/catheter_position/build && $(MAKE) -f tension_m/CMakeFiles/translation.dir/build.make tension_m/CMakeFiles/translation.dir/src/translation.cpp.s
+.PHONY : src/translation.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -399,6 +437,7 @@ help:
 	@echo "... tension_m_genlisp"
 	@echo "... tension_m_genpy"
 	@echo "... test"
+	@echo "... translation"
 	@echo "... src/aura_serial.o"
 	@echo "... src/aura_serial.i"
 	@echo "... src/aura_serial.s"
@@ -408,6 +447,9 @@ help:
 	@echo "... src/tension_value_write.o"
 	@echo "... src/tension_value_write.i"
 	@echo "... src/tension_value_write.s"
+	@echo "... src/translation.o"
+	@echo "... src/translation.i"
+	@echo "... src/translation.s"
 .PHONY : help
 
 

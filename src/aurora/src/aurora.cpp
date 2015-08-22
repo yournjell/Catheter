@@ -301,7 +301,8 @@ geometry_msgs::PoseArray readData()
         poseHandle.position.z=0;
     }
     else
-    {
+    {   
+
         poseHandle.orientation.w=atof((handleString.substr(0,6)).data())/10000;
         poseHandle.orientation.z=atof((handleString.substr(6,6)).data())/10000;
         poseHandle.orientation.y=atof((handleString.substr(12,6)).data())/10000;
@@ -337,6 +338,8 @@ geometry_msgs::PoseArray readData()
         }
         else
         {
+
+
             poseHandle.orientation.w=atof((handleString.substr(0,6)).data())/10000;
             poseHandle.orientation.z=atof((handleString.substr(6,6)).data())/10000;
             poseHandle.orientation.y=atof((handleString.substr(12,6)).data())/10000;

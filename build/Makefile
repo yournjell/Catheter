@@ -1164,6 +1164,19 @@ tension_m_genpy/fast:
 .PHONY : tension_m_genpy/fast
 
 #=============================================================================
+# Target rules for targets named translation
+
+# Build rule for target.
+translation: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 translation
+.PHONY : translation
+
+# fast build rule for target.
+translation/fast:
+	$(MAKE) -f tension_m/CMakeFiles/translation.dir/build.make tension_m/CMakeFiles/translation.dir/build
+.PHONY : translation/fast
+
+#=============================================================================
 # Target rules for targets named actionlib_generate_messages_cpp
 
 # Build rule for target.
@@ -1566,6 +1579,7 @@ help:
 	@echo "... tension_m_generate_messages_py"
 	@echo "... tension_m_genlisp"
 	@echo "... tension_m_genpy"
+	@echo "... translation"
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... actionlib_generate_messages_py"

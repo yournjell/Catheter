@@ -221,24 +221,21 @@ pp = (dis_xa-(pd*100))/10;
 int p2d = pp;
 ll = (dis_xa-(pd*100)-(p2d*10));
 int p3d = ll;
-
+pp = (dis_xa-(pd*100)-(p2d*10)-p3d)*10;
+int p4d = pp;
 
 int pdir = distance_dir;
 
 
-
-
 //char* p_arr[1] = reinterpret_cast<char*>(arr[0]);
 
-char buf1[18]={8,p,p2,p3,pa,p2a,p3a,pb,p2b,p3b,pc,p2c,p3c,pd,p2d,p3d,pdir,6};
+char buf1[16]={p,p2,p3,pa,p2a,p3a,pb,p2b,p3b,pc,p2c,pd,p2d,p3d,p4d,pdir};
 
 
-//printf("%d , %d, %d,%d , %d, %d,%d , %d, %d,%d , %d, %d,%d , %d, %d", buf1[0], buf1[1], buf1[2], buf1[3], buf1[4], buf1[5], buf1[6], buf1[7], buf1[8], buf1[9], buf1[10], buf1[11], buf1[12], buf1[13], buf1[14]);       
+//ROS_INFO("%d , %d, %d,%d , %d, %d,%d , %d, %d,%d , %d, %d,%d , %d, %d, %d, %d, %d", buf1[0], buf1[1], buf1[2], buf1[3], buf1[4], buf1[5], buf1[6], buf1[7], buf1[8], buf1[9], buf1[10], buf1[11], buf1[12], buf1[13], buf1[14],buf1[15], buf1[16],buf1[17]);       
+
     
-  write(hj,buf1,18);
-
-
-
+  write(hj,buf1,16);
 
 	int tension[25], k = 24;
 
