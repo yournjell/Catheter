@@ -286,25 +286,25 @@ float theta_z = (atan2(2*(top_ori_w*top_ori_z+top_ori_x*top_ori_y), 1-2*(top_ori
 */
 float heading, attitude, bank;
 
-	double test = top_ori_x*top_ori_y + top_ori_z*top_ori_w;
+	double test = top_ori_x/2*top_ori_y/2 + top_ori_z/2*top_ori_w/2;
 	if (test > 0.499) { // singularity at north pole
-		heading = 2 * atan2(top_ori_x,top_ori_w);
+		heading = 2 * atan2(top_ori_x/2,top_ori_w/2);
 		attitude = 3.14/2;
 		bank = 0;
 	
 	}
 	if (test < -0.499) { // singularity at south pole
-		heading = -2 * atan2(top_ori_x,top_ori_w);
+		heading = -2 * atan2(top_ori_x/2,top_ori_w/2);
 		attitude = - 3.14/2;
 		bank = 0;
 		
 	}
-    double sqx = top_ori_x*top_ori_x;
-    double sqy = top_ori_y*top_ori_y;
-    double sqz = top_ori_z*top_ori_z;
-        heading = atan2(2*top_ori_y*top_ori_w-2*top_ori_x*top_ori_z , 1 - 2*sqy - 2*sqz);
+    double sqx = top_ori_x/2*top_ori_x/2;
+    double sqy = top_ori_y/2*top_ori_y/2;
+    double sqz = top_ori_z/2*top_ori_z/2;
+        heading = atan2(2*top_ori_y/2*top_ori_w/2-2*top_ori_x/2*top_ori_z/2 , 1 - 2*sqy - 2*sqz);
 	attitude = asin(2*test);
-	bank = atan2(2*top_ori_x*top_ori_w-2*top_ori_y*top_ori_z , 1 - 2*sqx - 2*sqz);
+	bank = atan2(2*top_ori_x/2*top_ori_w/2-2*top_ori_y/2*top_ori_z/2 , 1 - 2*sqx - 2*sqz);
 
 
 

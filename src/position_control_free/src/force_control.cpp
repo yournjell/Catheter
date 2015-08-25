@@ -302,6 +302,8 @@ float heading, attitude, bank;
     double sqx = top_ori_x/2*top_ori_x/2;
     double sqy = top_ori_y/2*top_ori_y/2;
     double sqz = top_ori_z/2*top_ori_z/2;
+
+
         heading = atan2(2*top_ori_y/2*top_ori_w/2-2*top_ori_x/2*top_ori_z/2 , 1 - 2*sqy - 2*sqz);
 	attitude = asin(2*test);
 	bank = atan2(2*top_ori_x/2*top_ori_w/2-2*top_ori_y/2*top_ori_z/2 , 1 - 2*sqx - 2*sqz);
@@ -317,6 +319,9 @@ float theta_y2 = ((asin(-2*(bot_ori_x*bot_ori_z-bot_ori_y*bot_ori_w)/((bot_ori_x
 float theta_z2 = (atan2(2*(bot_ori_w*bot_ori_z+bot_ori_x*bot_ori_y), 1-2*(bot_ori_y*bot_ori_y+(bot_ori_z*bot_ori_z)))*180/3.14 );
 
 float the_x = top_ori_x*180/3.14;
+
+
+
 
 
 ROS_INFO("after  %f %f  %f before %f %f  %f test %f", heading*180/3.14+139, attitude*180/3.14, bank*180/3.14+135,heading*180/3.14, attitude*180/3.14, bank*180/3.14, test);
