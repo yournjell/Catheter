@@ -303,10 +303,10 @@ geometry_msgs::PoseArray readData()
     else
     {   
 
-        poseHandle.orientation.w=atof((handleString.substr(0,6)).data())/10000;
-        poseHandle.orientation.z=atof((handleString.substr(6,6)).data())/10000;
-        poseHandle.orientation.y=atof((handleString.substr(12,6)).data())/10000;
-        poseHandle.orientation.x=atof((handleString.substr(18,6)).data())/10000;
+        poseHandle.orientation.w=atof((handleString.substr(0,6)).data())/1000;
+        poseHandle.orientation.z=atof((handleString.substr(6,6)).data())/1000;
+        poseHandle.orientation.y=atof((handleString.substr(12,6)).data())/1000;
+        poseHandle.orientation.x=atof((handleString.substr(18,6)).data())/1000;
         poseHandle.position.z=atof((handleString.substr(24,7)).data())/-1000+10;
         poseHandle.position.y=atof((handleString.substr(31,7)).data())/1000;
         poseHandle.position.x=atof((handleString.substr(38,7)).data())/1000+18;
@@ -340,10 +340,10 @@ geometry_msgs::PoseArray readData()
         {
 
 
-            poseHandle.orientation.w=atof((handleString.substr(0,6)).data())/10000;
-            poseHandle.orientation.z=atof((handleString.substr(6,6)).data())/10000;
-            poseHandle.orientation.y=atof((handleString.substr(12,6)).data())/10000;
-            poseHandle.orientation.x=atof((handleString.substr(18,6)).data())/10000;
+            poseHandle.orientation.w=atof((handleString.substr(0,6)).data())/1000;
+            poseHandle.orientation.z=atof((handleString.substr(6,6)).data())/1000;
+            poseHandle.orientation.y=atof((handleString.substr(12,6)).data())/1000;
+            poseHandle.orientation.x=atof((handleString.substr(18,6)).data())/1000;
             poseHandle.position.z=atof((handleString.substr(24,7)).data())/-1000+10;
             poseHandle.position.y=atof((handleString.substr(31,7)).data())/1000;
             poseHandle.position.x=atof((handleString.substr(38,7)).data())/1000+18;
