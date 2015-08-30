@@ -6,10 +6,16 @@ position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /hom
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/XmlRpcDecl.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/XmlRpcValue.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/Point.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/PointStamped.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/Pose.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/PoseArray.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/PoseStamped.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/Quaternion.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/QuaternionStamped.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/Transform.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/TransformStamped.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/Vector3.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/Vector3Stamped.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/Wrench.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/geometry_msgs/WrenchStamped.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/ros/advertise_options.h
@@ -71,5 +77,13 @@ position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/std_msgs/Float64.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/std_msgs/Header.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/std_msgs/String.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/tf/LinearMath/Matrix3x3.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/tf/LinearMath/MinMax.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/tf/LinearMath/QuadWord.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/tf/LinearMath/Quaternion.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/tf/LinearMath/Scalar.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/tf/LinearMath/Transform.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/tf/LinearMath/Vector3.h
+position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/tf/transform_datatypes.h
 position_control_free/CMakeFiles/force_control.dir/src/force_control.cpp.o: /opt/ros/indigo/include/visualization_msgs/Marker.h
 
